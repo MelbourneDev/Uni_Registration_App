@@ -1,0 +1,52 @@
+
+
+This document serves as the understanding reading material and document outline for the project University Course Registration App.
+It will also serve as a progress report that interatively updates with the project itself. 
+________________________________________________________________________________________________________________________________________
+22/11/2023 make spring boot application through initialiser and set up the database using php myadmin. The database will be MySQL and 
+consist of tables relative to the app. 
+
+1. User
+ID (Primary Key, Auto Increment)
+Username
+Password
+Email
+Role (Enum: Admin, Tutor, Student)
+Profile Information (Foreign Key to Profile Table)
+
+2. Profile
+ID (Primary Key, Auto Increment)
+FirstName
+LastName
+DateOfBirth
+Gender
+ContactNumber
+Address
+
+3. Course
+CourseCode (Primary Key)
+Title
+Description
+Credits
+Department (Foreign Key to Department Table)
+AssignedProfessor (Foreign Key to User Table, Role = Tutor)
+
+4. Department
+ID (Primary Key, Auto Increment)
+Name
+HeadOfDepartment (Foreign Key to User Table, Role = Tutor)
+
+5. Schedule
+ID (Primary Key, Auto Increment)
+UserID (Foreign Key to User Table)
+CourseCode (Foreign Key to Course Table)
+Semester
+Year
+Status (Enum: Enrolled, Completed, Dropped)
+
+6. AdminActions
+ID (Primary Key, Auto Increment)
+AdminID (Foreign Key to User Table, Role = Admin)
+ActionType (Enum: ScheduleUpdate, CourseUpdate, UserUpdate)
+Details
+Timestamp
