@@ -9,8 +9,15 @@ class Department (
     @Id
     @GeneratedValue(strategy = GenerationType. IDENTITY)
     val id: Long? = null,
-    val name: String,
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    val name: DepartmentName,
 
     @OneToMany(mappedBy = "department")
     val courses: Set<Course> = HashSet()
 )
+
+enum class DepartmentName{
+    Engineering, IT, Sciences, Law
+}
