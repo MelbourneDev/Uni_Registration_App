@@ -10,14 +10,18 @@ class Course(
     val title: String,
     val description: String,
     val credits: Int,
-    val tutor: String,
 
     @ManyToOne
     @JoinColumn(name = "department_id")
     val department: Department,
 
     @ManyToOne
-    @JoinColumn(name = "assigned_professor_id")
-    val assignedProfessor: User
+    @JoinColumn(name = "tutor_id", nullable = true)
+    val tutor_id: User?,
+
+
+    @ManyToOne
+    @JoinColumn(name = "assigned_professor_name", nullable = true)
+    val tutor: Tutor?
 
 )

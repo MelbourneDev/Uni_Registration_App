@@ -30,12 +30,18 @@ class User_Controller(
                 .body(APIResponses.RegistrationBadResponse("Username or Email already exists"))
         }
 
-// save the user in the user entity as well as the student entity.
+        // save the user in the user entity as well as the student entity.
         val savedUser = userRepository.save(user)
         val newStudent = Student(user = savedUser)
-        val savedStudent = studentRepository.save(newStudent)
-// generate token for that users session as after registration they will be logged in automatically.
-    val token = jwtService.generateToken(user.username)
-    return ResponseEntity.ok(APIResponses.RegistrationResponse(token,"Student successfully registered"))
-}
+        studentRepository.save(newStudent)
+        // Check if savedUser has an ID before generating token
+        val userId = savedUser.id ?: return ResponseEntity
+            .status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(APIResponses.RegistrationBadResponse("Error during registration"))
+
+
+        // generate token for that users session as after registration they will be logged in automatically.
+        val token = jwtService.generateToken(savedUser.username, savedUser.id)
+        return ResponseEntity.ok(APIResponses.RegistrationResponse(token,"Student successfully registered"))
+    }
 }

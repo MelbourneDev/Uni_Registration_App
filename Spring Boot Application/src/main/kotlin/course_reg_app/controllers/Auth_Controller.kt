@@ -1,6 +1,7 @@
 package course_reg_app.controllers
 
 import course_reg_app.models.APIResponses
+import course_reg_app.models.User
 import course_reg_app.service.AuthService
 import course_reg_app.service.JwTService
 import org.springframework.http.HttpStatus
@@ -21,9 +22,9 @@ class Auth_Controller(
 {
     @PostMapping("/login")
     fun loginUser(@RequestBody loginRequest: APIResponses.LoginRequest): ResponseEntity<APIResponses.LoginResponse>{
-        val userExists = authService.authenticateUser(loginRequest.username, loginRequest.password)
-        return if (userExists){
-            val token = jwtService.generateToken(loginRequest.username)
+        val user = authService.authenticateUser(loginRequest.username, loginRequest.password)
+        return if (user != null){
+            val token = jwtService.generateToken(loginRequest.username, user.id!!)
             ResponseEntity.ok(APIResponses.LoginResponse(token, "Login Successful"))
         } else {
             ResponseEntity.status(HttpStatus.UNAUTHORIZED)
