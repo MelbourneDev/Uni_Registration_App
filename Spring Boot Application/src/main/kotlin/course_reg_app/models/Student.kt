@@ -20,8 +20,4 @@ data class Student(
     val department: Department? = null,
 
 
-
-    val major: String? = null,
-
-
 )

@@ -16,7 +16,6 @@ class Department_Controller (
 
 )
     {
-
     @PostMapping("/choices")
             fun departmentChoices(@RequestBody department: Department): ResponseEntity<Any> {
 
